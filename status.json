@@ -1,0 +1,102 @@
+{
+  "registration": {
+    "url": "https://thegraph.chorus.one/",
+    "address": "0xfD12A5A7Bc7f2EB4904a8177418dBB0Bf094Ba16",
+    "registered": true,
+    "location": "50.98581075668335,2.128279209136963"
+  },
+  "endpoints": [
+    {
+      "name": "channels",
+      "url": "https://thegraph.chorus.one/channel-messages-inbox",
+      "status": "\u001b[32mup\u001b[39m",
+      "tests": [
+        {
+          "test": "URL validation",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        },
+        {
+          "test": "echo '{}' | http post https://thegraph.chorus.one/channel-messages-inbox",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        }
+      ]
+    },
+    {
+      "name": "service",
+      "url": "https://thegraph.chorus.one/",
+      "status": "\u001b[32mup\u001b[39m",
+      "tests": [
+        {
+          "test": "URL validation",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        },
+        {
+          "test": "http get https://thegraph.chorus.one/",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "url": "https://thegraph.chorus.one/status",
+      "status": "\u001b[32mup\u001b[39m",
+      "tests": [
+        {
+          "test": "URL validation",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        },
+        {
+          "test": "http post https://thegraph.chorus.one/status query=\"{ indexingStatuses { subgraph } }\"",
+          "error": null,
+          "possibleActions": [],
+          "__typename": "IndexerEndpointTest"
+        }
+      ]
+    }
+  ],
+  "indexingRules": [
+    {
+      "deployment": {
+        "kind": "deployment-id",
+        "value": "0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500"
+      },
+      "allocationAmount": {
+        "type": "BigNumber",
+        "hex": "0x0586080e252c6bc1a80000"
+      },
+      "parallelAllocations": 1,
+      "maxAllocationPercentage": null,
+      "minSignal": null,
+      "maxSignal": null,
+      "minStake": null,
+      "minAverageQueryFees": null,
+      "custom": null,
+      "decisionBasis": "never"
+    },
+    {
+      "deployment": "global",
+      "allocationAmount": {
+        "type": "BigNumber",
+        "hex": "0x2386f26fc10000"
+      },
+      "parallelAllocations": 1,
+      "maxAllocationPercentage": null,
+      "minSignal": null,
+      "maxSignal": null,
+      "minStake": null,
+      "minAverageQueryFees": null,
+      "custom": null,
+      "decisionBasis": "rules"
+    }
+  ]
+}
