@@ -1,58 +1,18 @@
+import dotenv from 'dotenv';
 import express from 'express';
-import { readFile } from 'fs/promises';
-import { register, Gauge } from 'prom-client';
-import indexerJson from '../status.json';
+import { register } from 'prom-client';
+import { GraphWatchtower } from './watchtower';
+dotenv.config({ path: 'config.env' });
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+const URL = process.env.URL as string;
+const WAIT_TIME = parseInt(process.env.WAIT_TIME || '1000');
 
-const graph_indexer_status = new Gauge({
-  name: 'graph_watchtower_service_status',
-  help: 'Keeps track of the status of the graph indexer endpoints',
-  labelNames: ['name'],
-});
+const watchtower = new GraphWatchtower(URL, WAIT_TIME);
 
-const wait = async (time = 1000) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
-};
-
-const checkServiceStatus = async (statusJson = indexerJson) => {
-  try {
-    const { endpoints } = statusJson;
-
-    const statuses: any = [];
-
-    endpoints.forEach((endpoint) => {
-      statuses.push({ key: endpoint.name, status: 'up' });
-    });
-
-    return statuses;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const updateServiceStatus = async () => {
-  try {
-    while (true) {
-      const status = await checkServiceStatus();
-
-      status.forEach((service: any) => {
-        graph_indexer_status.labels(service.key).set(Math.round(Math.random()));
-      });
-
-      await wait(5000);
-
-      console.log('wait over');
-    }
-  } catch (error) {}
-};
-
-app.post('/add-metric', (_, res) => {
-  updateServiceStatus();
-  res.send('Done');
-});
+watchtower.run();
 
 app.get('/metrics', async (req, res) => {
   try {
@@ -64,7 +24,9 @@ app.get('/metrics', async (req, res) => {
 });
 
 app.get('/', (_, res) => {
-  res.send(indexerJson);
+  try {
+    res.send('Graph Watchtower');
+  } catch (error) {}
 });
 
 app.listen(PORT, () => {

@@ -6,13 +6,13 @@
   "scripts": {
     "start": "ts-node --files src/app.ts",
     "dev": "nodemon build/src/app.js",
-    "status:check": "ts-node src/utils.ts",
     "tsc:watch": "tsc -w"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "^0.19.0",
     "@urql/core": "^2.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "isomorphic-fetch": "^3.0.0",
     "prom-client": "^13.1.0"
